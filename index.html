@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FinDistrib Hub | Distribution Finance & Intelligence</title>
+  <title>FinDistrib Hub | Distribution Finance Infrastructure</title>
 
-  <meta name="description" content="FinDistrib Hub connects FMCG brands, distributors, and financial institutions through credit enablement, distribution intelligence, and risk signals." />
+  <meta name="description" content="FinDistrib Hub bridges distributors, brands, and capital through data-driven credit enablement and distribution intelligence." />
 
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,118 +17,309 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      font-family: "Plus Jakarta Sans", sans-serif;
+    :root{
+      --ink:#0b1220;
+      --glass: rgba(255,255,255,0.10);
+      --glass2: rgba(255,255,255,0.14);
+      --line: rgba(255,255,255,0.10);
+      --node: rgba(255,255,255,0.22);
+      --nodeGlow: rgba(255,255,255,0.35);
+      --primary: #0d6efd;
+      --success: #198754;
     }
-    .hero {
+
+    body{
+      font-family:"Plus Jakarta Sans", sans-serif;
+      scroll-behavior:smooth;
+      background:#fff;
+    }
+
+    /* NAVBAR: slightly translucent over hero */
+    .navbar{
+      backdrop-filter: blur(10px);
+      background: rgba(10, 14, 24, 0.78) !important;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* HERO */
+    .hero{
+      position:relative;
+      padding: 9.5rem 0 7.5rem;
+      color:#fff;
+      overflow:hidden;
+      isolation:isolate;
+
+      /* animated deep gradient base */
+      background:
+        radial-gradient(1200px 700px at 10% 20%, rgba(255,255,255,0.10), transparent 55%),
+        radial-gradient(900px 600px at 90% 75%, rgba(255,255,255,0.08), transparent 55%),
+        linear-gradient(135deg, rgba(8,46,120,0.98), rgba(13,110,253,0.96));
+    }
+
+    /* Soft moving gradient layer */
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(13,110,253,0.35), transparent 40%),
+        radial-gradient(circle at 75% 70%, rgba(25,135,84,0.28), transparent 42%),
+        radial-gradient(circle at 55% 15%, rgba(255,255,255,0.18), transparent 35%);
+      filter: blur(20px);
+      opacity:0.55;
+      animation: drift 14s ease-in-out infinite;
+      z-index:0;
+    }
+
+    @keyframes drift{
+      0%   { transform: translate3d(-2%, -1%, 0) rotate(0deg) scale(1.02); }
+      50%  { transform: translate3d(2%, 1.2%, 0) rotate(8deg) scale(1.06); }
+      100% { transform: translate3d(-2%, -1%, 0) rotate(0deg) scale(1.02); }
+    }
+
+    /* Noise texture overlay (premium feel) */
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image:url("data:image/svg+xml;utf8,\
+      <svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'>\
+      <filter id='n'>\
+        <feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/>\
+      </filter>\
+      <rect width='300' height='300' filter='url(%23n)' opacity='.22'/>\
+      </svg>");
+      mix-blend-mode: overlay;
+      opacity:0.22;
+      z-index:1;
+      pointer-events:none;
+    }
+
+    /* Floating light orbs (the “lights”) */
+    .orb{
+      position:absolute;
+      width:420px;
+      height:420px;
+      border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.03) 45%, transparent 70%);
+      filter: blur(2px);
+      opacity:0.85;
+      animation: floaty 10s ease-in-out infinite;
+      z-index:2;
+      pointer-events:none;
+    }
+    .orb.orb-1{ top:-120px; left:-120px; animation-duration: 12s; }
+    .orb.orb-2{ bottom:-180px; right:-150px; width:520px; height:520px; animation-duration: 15s; opacity:0.65; }
+    .orb.orb-3{ top:18%; right:10%; width:260px; height:260px; animation-duration: 11s; opacity:0.55; }
+
+    @keyframes floaty{
+      0% { transform: translate3d(0,0,0) scale(1); }
+      50% { transform: translate3d(14px,-12px,0) scale(1.06); }
+      100% { transform: translate3d(0,0,0) scale(1); }
+    }
+
+    /* Network SVG overlay container */
+    .hero-net{
+      position:absolute;
+      inset:0;
+      z-index:3;
+      pointer-events:none;
+      opacity:0.95;
+    }
+
+    /* Animated line shimmer */
+    .hero-net .link{
+      stroke: var(--line);
+      stroke-width: 1.2;
+      stroke-linecap: round;
+      stroke-dasharray: 7 14;
+      animation: dash 18s linear infinite;
+      opacity:0.55;
+    }
+    @keyframes dash{
+      to { stroke-dashoffset: -220; }
+    }
+
+    /* Glow nodes */
+    .hero-net .node{
+      fill: var(--node);
+      opacity:0.9;
+    }
+    .hero-net .nodeGlow{
+      fill: var(--nodeGlow);
+      opacity:0.55;
+      filter: blur(0.2px);
+      animation: pulse 3.6s ease-in-out infinite;
+      transform-origin: center;
+    }
+    .hero-net .nodeGlow.delay1{ animation-delay: .6s; }
+    .hero-net .nodeGlow.delay2{ animation-delay: 1.2s; }
+    .hero-net .nodeGlow.delay3{ animation-delay: 1.8s; }
+
+    @keyframes pulse{
+      0%{ transform: scale(1); opacity:0.40; }
+      50%{ transform: scale(1.35); opacity:0.75; }
+      100%{ transform: scale(1); opacity:0.40; }
+    }
+
+    .hero .container{
+      position:relative;
+      z-index:4;
+    }
+
+    /* HERO text */
+    .hero h1{
+      letter-spacing: -0.02em;
+      text-shadow: 0 12px 35px rgba(0,0,0,0.22);
+    }
+    .hero p{
+      max-width: 980px;
+      margin: 0 auto;
+      color: rgba(255,255,255,0.92);
+      text-shadow: 0 12px 30px rgba(0,0,0,0.18);
+    }
+
+    /* CTA button glow */
+    .btn-glow{
+      position:relative;
+      border: none;
+      box-shadow: 0 16px 45px rgba(255,255,255,0.10);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .btn-glow::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      border-radius: inherit;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55), rgba(255,255,255,0.12) 45%, transparent 70%);
+      opacity:0;
+      transition: opacity .25s ease;
+      pointer-events:none;
+    }
+    .btn-glow:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 22px 60px rgba(255,255,255,0.14);
+    }
+    .btn-glow:hover::before{ opacity:0.65; }
+
+    /* Section icon badge */
+    .icon-badge{
+      width:48px;
+      height:48px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:12px;
+      font-size:20px;
+    }
+
+    /* DIFFERENTIATION */
+    .difference-section{
+      background:
+        radial-gradient(circle at 15% 20%, rgba(13,110,253,0.08), transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(25,135,84,0.08), transparent 45%);
+    }
+    .difference-card{
+      background:#fff;
+      border-radius:16px;
+      padding:2rem;
+      height:100%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+    .difference-card:hover{
+      transform: translateY(-6px);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.12);
+    }
+    .difference-card.highlight{
       background: linear-gradient(135deg, #0d6efd, #0b5ed7);
-      color: white;
-      padding: 6rem 0;
+      color:#fff;
     }
-    .icon-badge {
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 12px;
-      font-size: 20px;
+    .difference-card ul{
+      padding-left: 1.2rem;
+      margin-top: 1rem;
     }
-    .partner-tile {
-      background: #f8f9fa;
-      border-radius: 10px;
-      padding: 1.2rem;
-      text-align: center;
-      font-weight: 600;
+    .difference-card ul li{
+      margin-bottom: .6rem;
     }
-    .brand-logo {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 20px;
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  }
-    .brand-logo img {
-      max-height: 60px;
-      max-width: 100%;
-      object-fit: contain;
+
+    /* Brand logo tiles */
+    .brand-logo{
+      background:#ffffff;
+      border-radius:12px;
+      padding:20px;
+      height:120px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .brand-logo:hover{
+      transform: translateY(-4px);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.10);
+    }
+    .brand-logo img{
+      max-height:60px;
+      max-width:100%;
+      object-fit:contain;
       filter: grayscale(100%);
-      opacity: 0.85;
+      opacity:0.88;
+      transition: all .3s ease;
     }
-
-    .brand-logo img:hover {
+    .brand-logo:hover img{
       filter: grayscale(0%);
-      opacity: 1;
-      transition: all 0.3s ease;
+      opacity:1;
     }
-      .cta-section {
-        background: linear-gradient(135deg, #198754, #157347);
+
+    /* CTA section */
+    .cta-section{
+      background: linear-gradient(135deg, #198754, #157347);
+      position:relative;
+      overflow:hidden;
+    }
+    .cta-section::before{
+      content:"";
+      position:absolute;
+      inset:-30%;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.16), transparent 45%),
+        radial-gradient(circle at 75% 70%, rgba(255,255,255,0.10), transparent 55%);
+      filter: blur(18px);
+      opacity:0.6;
+      animation: drift 16s ease-in-out infinite;
+      pointer-events:none;
+    }
+    .cta-section .container{
+      position:relative;
+      z-index:1;
+    }
+
+    /* Scroll animations */
+    .fade-up{
+      opacity:0;
+      transform: translateY(34px);
+      transition: opacity .85s ease, transform .85s ease;
+    }
+    .fade-up.visible{
+      opacity:1;
+      transform: translateY(0);
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .hero::before, .orb, .hero-net .link, .hero-net .nodeGlow, .cta-section::before{
+        animation:none !important;
       }
-      .hero {
-    position: relative;
-    padding: 7.5rem 0;
-    color: #ffffff;
-    overflow: hidden;
-
-    background:
-      linear-gradient(
-        135deg,
-        rgba(8, 46, 120, 0.96),
-        rgba(13, 110, 253, 0.96)
-      );
-  }
-
-  /* SVG network overlay */
-  .hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml;utf8,\
-  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 900'>\
-  <g fill='none' stroke='rgba(255,255,255,0.08)' stroke-width='1'>\
-  <line x1='200' y1='150' x2='500' y2='300'/>\
-  <line x1='500' y1='300' x2='900' y2='200'/>\
-  <line x1='900' y1='200' x2='1200' y2='400'/>\
-  <line x1='300' y1='500' x2='600' y2='350'/>\
-  <line x1='600' y1='350' x2='1000' y2='500'/>\
-  </g>\
-  <g fill='rgba(255,255,255,0.15)'>\
-  <circle cx='200' cy='150' r='4'/>\
-  <circle cx='500' cy='300' r='5'/>\
-  <circle cx='900' cy='200' r='4'/>\
-  <circle cx='1200' cy='400' r='5'/>\
-  <circle cx='300' cy='500' r='4'/>\
-  <circle cx='600' cy='350' r='5'/>\
-  <circle cx='1000' cy='500' r='4'/>\
-  </g>\
-  </svg>");
-    background-size: cover;
-    opacity: 0.7;
-  }
-
-  /* Soft light gradients for depth */
-  .hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.10), transparent 40%),
-      radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08), transparent 45%);
-  }
-
-  .hero .container {
-    position: relative;
-    z-index: 2;
-  }
+      .fade-up{ transition:none !important; transform:none !important; opacity:1 !important; }
+    }
   </style>
 </head>
+
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
   <div class="container">
     <a class="navbar-brand fw-bold" href="#">FinDistrib Hub</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
@@ -137,10 +328,11 @@
     <div class="collapse navbar-collapse" id="navMenu">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="#ecosystem">Ecosystem</a></li>
+        <li class="nav-item"><a class="nav-link" href="#difference">Why Different</a></li>
         <li class="nav-item"><a class="nav-link" href="#financial-partners">Financial Partners</a></li>
         <li class="nav-item"><a class="nav-link" href="#brand-partners">Brand Partners</a></li>
         <li class="nav-item ms-lg-3">
-          <a class="btn btn-success" href="#cta">Contact</a>
+          <a class="btn btn-success btn-glow" href="#cta">Contact</a>
         </li>
       </ul>
     </div>
@@ -149,16 +341,54 @@
 
 <!-- HERO -->
 <section class="hero">
+  <!-- floating light orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- animated network overlay with glowing nodes -->
+  <svg class="hero-net" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+    <!-- links -->
+    <line class="link" x1="180" y1="160" x2="520" y2="330"/>
+    <line class="link" x1="520" y1="330" x2="900" y2="220"/>
+    <line class="link" x1="900" y1="220" x2="1240" y2="430"/>
+    <line class="link" x1="310" y1="560" x2="640" y2="380"/>
+    <line class="link" x1="640" y1="380" x2="1030" y2="560"/>
+    <line class="link" x1="520" y1="330" x2="640" y2="380"/>
+    <line class="link" x1="900" y1="220" x2="1030" y2="560"/>
+
+    <!-- glow rings (lights) -->
+    <circle class="nodeGlow" cx="180" cy="160" r="10"/>
+    <circle class="nodeGlow delay1" cx="520" cy="330" r="12"/>
+    <circle class="nodeGlow delay2" cx="900" cy="220" r="10"/>
+    <circle class="nodeGlow delay3" cx="1240" cy="430" r="12"/>
+    <circle class="nodeGlow delay1" cx="310" cy="560" r="10"/>
+    <circle class="nodeGlow delay2" cx="640" cy="380" r="12"/>
+    <circle class="nodeGlow delay3" cx="1030" cy="560" r="10"/>
+
+    <!-- solid nodes -->
+    <circle class="node" cx="180" cy="160" r="4"/>
+    <circle class="node" cx="520" cy="330" r="5"/>
+    <circle class="node" cx="900" cy="220" r="4"/>
+    <circle class="node" cx="1240" cy="430" r="5"/>
+    <circle class="node" cx="310" cy="560" r="4"/>
+    <circle class="node" cx="640" cy="380" r="5"/>
+    <circle class="node" cx="1030" cy="560" r="4"/>
+  </svg>
+
   <div class="container text-center">
     <span class="badge bg-light text-primary mb-3">FMCG • Distribution • Finance</span>
-    <h1 class="display-5 fw-bold mt-3">
+
+    <h1 class="display-5 fw-bold mt-3 fade-up">
       Powering India’s FMCG Distribution with Credit & Intelligence
     </h1>
-    <p class="lead mt-4">
+
+    <p class="lead mt-4 fade-up">
       FinDistrib Hub connects brands, distributors, and financial institutions to unlock faster
       movement of goods, capital, and insights across fragmented markets.
     </p>
-    <a href="#cta" class="btn btn-light btn-lg mt-4 text-primary fw-semibold">
+
+    <a href="#cta" class="btn btn-light btn-lg mt-4 text-primary fw-semibold btn-glow fade-up">
       Partner with FinDistrib
     </a>
   </div>
@@ -169,13 +399,11 @@
   <div class="container">
     <div class="text-center mb-5">
       <h2 class="fw-bold">The FinDistrib Ecosystem</h2>
-      <p class="text-muted mt-2">
-        Infrastructure that aligns capital, commerce, and distribution intelligence.
-      </p>
+      <p class="text-muted mt-2">Infrastructure that aligns capital, commerce, and distribution intelligence.</p>
     </div>
 
     <div class="row g-4">
-      <div class="col-md-6 col-lg-3">
+      <div class="col-md-6 col-lg-3 fade-up">
         <div class="card h-100 shadow-sm border-0">
           <div class="card-body">
             <div class="icon-badge bg-primary text-white mb-3">
@@ -189,7 +417,7 @@
         </div>
       </div>
 
-      <div class="col-md-6 col-lg-3">
+      <div class="col-md-6 col-lg-3 fade-up">
         <div class="card h-100 shadow-sm border-0">
           <div class="card-body">
             <div class="icon-badge bg-success text-white mb-3">
@@ -203,7 +431,7 @@
         </div>
       </div>
 
-      <div class="col-md-6 col-lg-3">
+      <div class="col-md-6 col-lg-3 fade-up">
         <div class="card h-100 shadow-sm border-0">
           <div class="card-body">
             <div class="icon-badge bg-warning text-white mb-3">
@@ -217,7 +445,7 @@
         </div>
       </div>
 
-      <div class="col-md-6 col-lg-3">
+      <div class="col-md-6 col-lg-3 fade-up">
         <div class="card h-100 shadow-sm border-0">
           <div class="card-body">
             <div class="icon-badge bg-info text-white mb-3">
@@ -234,11 +462,66 @@
   </div>
 </section>
 
+<!-- DIFFERENTIATION -->
+<section id="difference" class="py-5 difference-section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="badge bg-primary-subtle text-primary mb-3">Our Differentiation</span>
+      <h2 class="fw-bold">Not a Marketplace. A Capital Bridge.</h2>
+      <p class="text-muted mt-2">Most platforms move products. We move capital where products already move.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4 fade-up">
+        <div class="difference-card">
+          <h5>❌ Traditional B2B Platforms</h5>
+          <ul>
+            <li>Marketplace-first approach</li>
+            <li>Credit limited to platform orders</li>
+            <li>One-size-fits-all SME financing</li>
+            <li>Trust scores, not deep underwriting</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 fade-up">
+        <div class="difference-card highlight">
+          <h5>✅ FinDistrib Hub</h5>
+          <ul>
+            <li>Finance-first, distribution-aware</li>
+            <li>Capital beyond marketplace transactions</li>
+            <li>Purpose-built for brands & distributors</li>
+            <li>Invoice & cash-flow-based risk signals</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-lg-4 fade-up">
+        <div class="difference-card">
+          <h5>🌉 What This Unlocks</h5>
+          <ul>
+            <li>Faster distributor working capital</li>
+            <li>Higher brand sales velocity</li>
+            <li>Lower NPA risk for lenders</li>
+            <li>Scalable co-lending & embedded finance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-5 fade-up">
+      <a href="#cta" class="btn btn-primary btn-lg px-5 btn-glow">
+        Explore Partnership Opportunities
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- FINANCIAL PARTNERS -->
 <section id="financial-partners" class="py-5">
   <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-6 fade-up">
         <h2 class="fw-bold">Built for Banks & NBFCs</h2>
         <p class="text-muted mt-3">
           FinDistrib Hub enables financial institutions to deploy capital deeper into the FMCG
@@ -251,7 +534,7 @@
           <li>Faster deployment vs standalone lending products</li>
         </ul>
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-6 fade-up">
         <div class="bg-light p-4 rounded shadow-sm">
           <h6 class="fw-semibold mb-3">Who this is for</h6>
           <p class="mb-1">• NBFCs financing trade & working capital</p>
@@ -266,50 +549,46 @@
 <!-- BRAND PARTNERS -->
 <section id="brand-partners" class="py-5 bg-light">
   <div class="container">
-    <div class="text-center mb-5">
+    <div class="text-center mb-5 fade-up">
       <h2 class="fw-bold">Brands Enabled Across the Distribution Network</h2>
-      <p class="text-muted mt-2">
-        Representative FMCG brands supported across categories and regions.
-      </p>
+      <p class="text-muted mt-2">Representative FMCG brands supported across categories and regions.</p>
     </div>
 
     <div class="row g-4 justify-content-center align-items-center">
-      <div class="col-6 col-md-4 col-lg-3">
+      <div class="col-6 col-md-4 col-lg-3 fade-up">
         <div class="brand-logo">
           <img src="assets/img/everest.png" alt="Everest Masala logo">
         </div>
       </div>
 
-      <div class="col-6 col-md-4 col-lg-3">
+      <div class="col-6 col-md-4 col-lg-3 fade-up">
         <div class="brand-logo">
           <img src="assets/img/haldiram.png" alt="Haldiram's logo">
         </div>
       </div>
 
-      <div class="col-6 col-md-4 col-lg-3">
+      <div class="col-6 col-md-4 col-lg-3 fade-up">
         <div class="brand-logo">
           <img src="assets/img/woosh.png" alt="Woosh logo">
         </div>
       </div>
     </div>
 
-    <p class="text-center text-muted small mt-4">
-      *Logos shown are representative of brands across FMCG categories.
-      Partnerships and engagements may vary by region and distribution channel.
+    <p class="text-center text-muted small mt-4 fade-up">
+      *Logos shown are representative. Partnerships and engagements may vary by region and distribution channel.
     </p>
   </div>
 </section>
 
-
 <!-- CTA -->
 <section id="cta" class="cta-section py-5 text-white">
   <div class="container text-center">
-    <h2 class="fw-bold">Partner with FinDistrib Hub</h2>
-    <p class="mt-3">
-      Whether you are a bank, NBFC, or FMCG brand, we help you move faster through
-      India’s fragmented distribution landscape.
+    <h2 class="fw-bold fade-up">Let’s Build the Financial Layer for Distribution</h2>
+    <p class="mt-3 fade-up">
+      Whether you are a bank, NBFC, or FMCG brand, we help you move faster through India’s fragmented distribution landscape.
     </p>
-    <a href="mailto:partnerships@findistribu.com" class="btn btn-light btn-lg mt-4 text-success fw-semibold">
+
+    <a href="mailto:partnerships@findistribu.com" class="btn btn-light btn-lg mt-4 text-success fw-semibold btn-glow fade-up">
       Start a Conversation
     </a>
   </div>
@@ -323,12 +602,25 @@
     </p>
     <div>
       <a href="#ecosystem" class="text-light me-3 text-decoration-none">Ecosystem</a>
-      <a href="#financial-partners" class="text-light me-3 text-decoration-none">Financial Partners</a>
+      <a href="#difference" class="text-light me-3 text-decoration-none">Why Different</a>
       <a href="#cta" class="text-light text-decoration-none">Contact</a>
     </div>
   </div>
 </footer>
 
+<!-- JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Scroll fade-ups
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add("visible");
+    }),
+    { threshold: 0.15 }
+  );
+  document.querySelectorAll(".fade-up").forEach(el => observer.observe(el));
+</script>
+
 </body>
 </html>
